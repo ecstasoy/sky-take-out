@@ -104,4 +104,20 @@ public class EmployeeController {
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
+
+    /**
+     * start or stop employee account
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    // Non-query return value does not need to use generic types
+    @PostMapping("/status/{status}")
+    @ApiOperation(value = "Start or stop employee account")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("Start or stop employee account：status={}, id={}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
 }
