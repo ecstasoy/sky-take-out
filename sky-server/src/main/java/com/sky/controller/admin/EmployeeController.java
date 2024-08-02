@@ -38,7 +38,7 @@ public class EmployeeController {
      * login
      *
      * @param employeeLoginDTO
-     * @return
+     * @return EmployeeLoginVO
      */
     @PostMapping("/login")
     @ApiOperation(value = "Employee login")
@@ -68,7 +68,7 @@ public class EmployeeController {
     /**
      * logout
      *
-     * @return
+     * @return String
      */
     @PostMapping("/logout")
     @ApiOperation(value = "Employee logout")
@@ -80,7 +80,7 @@ public class EmployeeController {
      * add new employee
      *
      * @param employeeDTO
-     * @return
+     * @return Result
      */
     @PostMapping
     @ApiOperation(value = "Add employee")
@@ -95,7 +95,7 @@ public class EmployeeController {
      * query employee list
      *
      * @param employeePageQueryDTO
-     * @return
+     * @return PageResult
      */
     @GetMapping("/page")
     @ApiOperation(value = "Query employee list")
@@ -110,7 +110,7 @@ public class EmployeeController {
      *
      * @param status
      * @param id
-     * @return
+     * @return Result
      */
     // Non-query return value does not need to use generic types
     @PostMapping("/status/{status}")
@@ -118,6 +118,27 @@ public class EmployeeController {
     public Result startOrStop(@PathVariable Integer status, Long id) {
         log.info("Start or stop employee account：status={}, id={}", status, id);
         employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
+    /**
+     * query employee by id
+     *
+     * @param id
+     * @return Employee
+     */
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Query employee by id")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "Update employee information")
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("Update employee information：{}", employeeDTO);
+        employeeService.update(employeeDTO);
         return Result.success();
     }
 }

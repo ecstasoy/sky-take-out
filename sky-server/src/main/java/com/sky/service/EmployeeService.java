@@ -13,21 +13,21 @@ public interface EmployeeService {
     /**
      * employee login
      * @param employeeLoginDTO
-     * @return
+     * @return Employee
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO);
 
     /**
      * add new employee
      * @param employeeDTO
-     * @return
+     * @return void
      */
     void save(EmployeeDTO employeeDTO);
 
     /**
      * Query employee list by page
      * @param employeePageQueryDTO
-     * @return
+     * @return PageResult
      */
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
@@ -37,4 +37,17 @@ public interface EmployeeService {
      * @param id
      */
     void startOrStop(Integer status, Long id);
+
+    /**
+     * query employee by id
+     * @param id
+     * @return Employee
+     */
+    Employee getById(Long id);
+
+    /**
+     * update employee information
+     * @param employeeDTO
+     */
+    void update(EmployeeDTO employeeDTO);
 }
