@@ -18,23 +18,23 @@ import java.time.format.DateTimeFormatter;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
- * 对象映射器:基于jackson将Java对象转为json，或者将json转为Java对象
- * 将JSON解析为Java对象的过程称为 [从JSON反序列化Java对象]
- * 从Java对象生成JSON的过程称为 [序列化Java对象到JSON]
+ * Object mapper: based on Jackson, convert Java objects to JSON, or convert JSON to Java objects
+ * The process of generating JSON from Java objects is called [serializing Java objects to JSON]
+ * The process of generating Java objects from JSON is called [deserializing JSON to Java objects]
  */
 public class JacksonObjectMapper extends ObjectMapper {
 
-    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
     //public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
-    public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
+    public static final String DEFAULT_DATE_TIME_FORMAT = "MM/dd/yyyy hh:mm a";
+    public static final String DEFAULT_TIME_FORMAT = "hh:mm:ss a";
 
     public JacksonObjectMapper() {
         super();
-        //收到未知属性时不报异常
+        //Do not throw an exception when receiving unknown properties
         this.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        //反序列化时，属性不存在的兼容处理
+        //Compatibility processing when the property does not exist during deserialization
         this.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         SimpleModule simpleModule = new SimpleModule()
@@ -45,7 +45,7 @@ public class JacksonObjectMapper extends ObjectMapper {
                 .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))
                 .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
 
-        //注册功能模块 例如，可以添加自定义序列化器和反序列化器
+        //Register functional modules, for example, you can add custom serializers and deserializers
         this.registerModule(simpleModule);
     }
 }
