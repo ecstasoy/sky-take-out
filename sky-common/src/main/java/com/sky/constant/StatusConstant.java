@@ -1,7 +1,7 @@
 package com.sky.constant;
 
 /**
- * 状态常量，启用或者禁用
+ * Status constant, 1 means enable, 0 means disable
  */
 public class StatusConstant {
 
