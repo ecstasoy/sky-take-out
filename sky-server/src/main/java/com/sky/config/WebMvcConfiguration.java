@@ -47,7 +47,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * @return
      */
     @Bean
-    public Docket docket() {
+    public Docket docket1() {
         log.info("Begin to generate API document...");
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("sky-take-out API document")
@@ -55,9 +55,28 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .description("sky-take-out API document")
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("admin APIs")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.admin"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket docket2() {
+        log.info("Begin to generate API document...");
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("sky-take-out API document")
+                .version("2.0")
+                .description("sky-take-out API document")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("user APIs")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;
