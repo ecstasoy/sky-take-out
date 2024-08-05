@@ -57,4 +57,26 @@ public interface DishMapper {
      * @param ids
      */
     void batchDelete(List<Long> ids);
+
+    /**
+     * Update dish according to the primary key
+     * @param dish
+     */
+    @AutoFill(value= OperationType.UPDATE)
+    void update(Dish dish);
+
+    /**
+     * Query dish by category id
+     * @param dish
+     * @return List<Dish>
+     */
+    List<Dish> list(Dish dish);
+
+    /**
+     * Query dish by setmeal id
+     * @param setmealId
+     * @return List<Dish>
+     */
+    @Select("select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #{setmealId}")
+    List<Dish> getBySetmealId(Long setmealId);
 }
