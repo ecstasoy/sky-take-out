@@ -107,8 +107,6 @@ public class HttpClientUtil {
             response = httpClient.execute(httpPost);
 
             resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        } catch (Exception e) {
-            throw e;
         } finally {
             try {
                 response.close();
@@ -140,9 +138,7 @@ public class HttpClientUtil {
             if (paramMap != null) {
                 //构造json格式数据
                 JSONObject jsonObject = new JSONObject();
-                for (Map.Entry<String, String> param : paramMap.entrySet()) {
-                    jsonObject.put(param.getKey(),param.getValue());
-                }
+                jsonObject.putAll(paramMap);
                 StringEntity entity = new StringEntity(jsonObject.toString(),"utf-8");
                 //设置请求编码
                 entity.setContentEncoding("utf-8");
@@ -157,8 +153,6 @@ public class HttpClientUtil {
             response = httpClient.execute(httpPost);
 
             resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        } catch (Exception e) {
-            throw e;
         } finally {
             try {
                 response.close();
