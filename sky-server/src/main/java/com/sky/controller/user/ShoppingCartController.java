@@ -35,4 +35,19 @@ public class ShoppingCartController {
         List<ShoppingCart> list = shoppingCartService.showShoppingCart();
         return Result.success(list);
     }
+
+    @PostMapping("/sub")
+    @ApiOperation("Subtract from shopping cart")
+    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO) {
+        log.info("Subtract from shopping cart, item info: {}", shoppingCartDTO);
+        shoppingCartService.subShoppingCart(shoppingCartDTO);
+        return Result.success();
+    }
+
+    @DeleteMapping("/clean")
+    @ApiOperation("Clean shopping cart")
+    public Result clean() {
+        shoppingCartService.cleanShoppingCart();
+        return Result.success();
+    }
 }
