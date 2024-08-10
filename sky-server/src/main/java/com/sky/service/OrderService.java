@@ -1,7 +1,6 @@
 package com.sky.service;
 
-import com.sky.dto.OrdersPaymentDTO;
-import com.sky.dto.OrdersSubmitDTO;
+import com.sky.dto.*;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
@@ -44,4 +43,53 @@ public interface OrderService {
      * @return
      */
     OrderVO getOrderDetail(Long orderId);
+
+    /**
+     * Cancel order by order id
+     * @param orderId
+     */
+    void cancelOrderById(Long orderId);
+
+    /**
+     * Repeat order
+     * @param orderId
+     */
+    void repeatOrder(Long orderId);
+
+    /**
+     * Page query order
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * Confirm order
+     * @param ordersConfirmDTO
+     */
+    void confirmOrder(OrdersConfirmDTO ordersConfirmDTO);
+
+    /**
+     * Reject order
+     * @param ordersRejectionDTO
+     */
+    void rejectOrder(OrdersRejectionDTO ordersRejectionDTO);
+
+    /**
+     * Cancel order
+     * @param ordersCancelDTO
+     */
+    void cancelOrder(OrdersCancelDTO ordersCancelDTO);
+
+    /**
+     * Deliver order
+     * @param orderId
+     */
+    void deliverOrder(Long orderId);
+
+    /**
+     * Complete order
+     * @param orderId
+     */
+    void completeOrder(Long orderId);
 }

@@ -25,3 +25,7 @@ sky:
     weChatPayCertFilePath:
     notify-url: http://21a14d0b.r24.cpolar.top/notify/paySuccess
     refundNotifyUrl: http://21a14d0b.r24.cpolar.top/notify/refundSuccess
+  shop:
+    address: 广东省广州市天河区新村北街15号
+  baidu:
+    ak: 0Y7kzjg6dzInaWvACf7DBwsTaGwFEvad

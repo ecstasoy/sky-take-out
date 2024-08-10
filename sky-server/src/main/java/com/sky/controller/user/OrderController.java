@@ -66,10 +66,42 @@ public class OrderController {
         return Result.success(pageResult);
     }
 
+    /**
+     * Query order details
+     *
+     * @param orderId
+     * @return
+     */
     @GetMapping("orderDetail/{orderId}")
     @ApiOperation("Query order details")
     public Result<OrderVO> details(@PathVariable Long orderId) {
         OrderVO orderVO = orderService.getOrderDetail(orderId);
         return Result.success(orderVO);
+    }
+
+    /**
+     * Cancel order
+     *
+     * @param orderId
+     * @return
+     */
+    @PutMapping("/cancel/{orderId}")
+    @ApiOperation("Cancel order")
+    public Result cancelOrder(@PathVariable Long orderId) {
+        orderService.cancelOrderById(orderId);
+        return Result.success();
+    }
+
+    /**
+     * Repeat order
+     *
+     * @param orderId
+     * @return
+     */
+    @PostMapping("/repetition/{orderId}")
+    @ApiOperation("Repeat order")
+    public Result repeatOrder(@PathVariable Long orderId) {
+        orderService.repeatOrder(orderId);
+        return Result.success();
     }
 }
