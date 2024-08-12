@@ -78,7 +78,8 @@ public class OrderServiceImpl implements OrderService {
         //Query the shopping cart based on the current user
         ShoppingCart shoppingCart = new ShoppingCart();
 
-        checkOutOfRange(addressBook.getProvinceName() + addressBook.getCityName() + addressBook.getDistrictName() + addressBook.getDetail());
+        //Check if the delivery address is out of range, Baidu map API is used to check the distance between the delivery address and the store
+        //checkOutOfRange(addressBook.getProvinceName() + addressBook.getCityName() + addressBook.getDistrictName() + addressBook.getDetail());
 
         Long userId = BaseContext.getCurrentId();
         shoppingCart.setUserId(userId);
@@ -326,7 +327,7 @@ public class OrderServiceImpl implements OrderService {
     public void rejectOrder(OrdersRejectionDTO ordersRejectionDTO) {
         Orders ordersDB = orderMapper.getById(ordersRejectionDTO.getId());
 
-        if(ordersDB == null || ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+        if(ordersDB == null || !ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
 
@@ -460,5 +461,20 @@ public class OrderServiceImpl implements OrderService {
             //配送距离超过10000米
             throw new OrderBusinessException("超出配送范围");
         }
+    }
+
+    public void remindOrder(Long orderId) {
+        Orders ordersDB = orderMapper.getById(orderId);
+
+        if(ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Map map = new HashMap();
+        map.put("type", 2); // 1: Incoming order; 2: Customer service message
+        map.put("orderId", orderId);
+        map.put("content", "Order ID: " + ordersDB.getNumber());
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 }

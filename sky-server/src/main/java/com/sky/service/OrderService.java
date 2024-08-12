@@ -92,4 +92,10 @@ public interface OrderService {
      * @param orderId
      */
     void completeOrder(Long orderId);
+
+    /**
+     * Remind order
+     * @param orderId
+     */
+    void remindOrder(Long orderId);
 }

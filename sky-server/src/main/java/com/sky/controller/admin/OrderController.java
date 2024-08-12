@@ -71,7 +71,7 @@ public class OrderController {
      * @param ordersRejectionDTO
      * @return
      */
-    @PutMapping("/reject")
+    @PutMapping("/rejection")
     @ApiOperation("Reject order")
     public Result rejectOrder(@RequestBody OrdersRejectionDTO ordersRejectionDTO) {
         log.info("Reject order: {}", ordersRejectionDTO);
