@@ -7,6 +7,7 @@ import com.sky.dto.OrdersRejectionDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -107,11 +108,24 @@ public class OrderController {
         return Result.success();
     }
 
+    /**
+     * Complete order
+     *
+     * @param orderId
+     * @return
+     */
     @PutMapping("/complete/{orderId}")
     @ApiOperation("Complete order")
     public Result completeOrder(@PathVariable Long orderId) {
         log.info("Complete order: {}", orderId);
         orderService.completeOrder(orderId);
         return Result.success();
+    }
+
+    @GetMapping("/statistics")
+    @ApiOperation("Order quantity statistics of each status")
+    public Result<OrderStatisticsVO> statistics() {
+        OrderStatisticsVO orderStatisticsVO = orderService.statistics();
+        return Result.success(orderStatisticsVO);
     }
 }

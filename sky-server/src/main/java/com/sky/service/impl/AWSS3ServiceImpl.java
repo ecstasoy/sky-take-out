@@ -1,10 +1,7 @@
 package com.sky.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.*;
 import com.sky.service.AWSS3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +32,10 @@ public class AWSS3ServiceImpl implements AWSS3Service {
             String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             String key = UUID.randomUUID().toString() + suffix;
 
-            PutObjectResult putObjectResult = amazonS3.putObject(new PutObjectRequest(bucketName, key, file.getInputStream(), objectMetadata));
-
-            if (putObjectResult != null) {
-                GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
-                URL url = amazonS3.generatePresignedUrl(urlRequest);
-
-                return url.toString();
-            }
+            PutObjectResult putObjectResult = amazonS3.putObject(new PutObjectRequest(bucketName, key, file.getInputStream(), objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
+            String url = String.format("https://s3.us-east-2.amazonaws.com/%s/%s", bucketName, key);
+            log.info("Upload file success: {}", url);
+            return url;
 
         } catch (Exception e) {
             log.info("Upload file failed: {}", e.getMessage());

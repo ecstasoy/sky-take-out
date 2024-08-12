@@ -78,4 +78,11 @@ public interface OrderMapper {
      * @return
      */
     List<GoodsSalesDTO> getSalesTop(LocalDateTime begin, LocalDateTime end);
+
+    /**
+     * Count order by status
+     * @param status
+     */
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer status);
 }
