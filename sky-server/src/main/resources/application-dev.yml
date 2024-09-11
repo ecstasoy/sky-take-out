@@ -7,8 +7,8 @@ sky:
     username: root
     password: "!Hyz001268"
   aws:
-    access-key: AKIAQKPILP7ADXYAWEOU
-    secret-key: M9zxC9nR4/cOIbDQVbu6hbJkkZUyS3wiiYJpGL72
+    access-key: // your aws access key
+    secret-key: // your aws secret key
     endpoint: s3.us-east-2.amazonaws.com
     bucket: kunhua-takeout
   redis:
